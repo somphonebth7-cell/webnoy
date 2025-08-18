@@ -19,10 +19,8 @@ class Skill(models.Model):
     s_name = models.CharField(max_length=500)
     s_level = models.CharField(max_length=500)
 
-
     def __str__(self):
         return self.s_name
-
 
 
 class Experince(models.Model):
@@ -34,7 +32,6 @@ class Experince(models.Model):
     def __str__(self):
         return self.s_name
 
-
 class Academic(models.Model):
     cv = models.ForeignKey(Cv, on_delete=models.CASCADE)
     a_institution = models.CharField(max_length=500)
@@ -44,8 +41,6 @@ class Academic(models.Model):
     def __str__(self):
         return self.a_institution
 
-
-
 class Referee(models.Model):
     cv = models.ForeignKey(Cv, on_delete=models.CASCADE)
     r_name = models.CharField(max_length=500)
@@ -54,8 +49,6 @@ class Referee(models.Model):
 
     def __str__(self):
         return self.r_name
-
-
 
 class Profile(models.Model):
     cv = models.ForeignKey(Cv, on_delete=models.CASCADE)
@@ -71,7 +64,6 @@ class Profile(models.Model):
     dob = models.DateField(default='None')
     bio = models.TextField()
     avator = models.ImageField(upload_to='profile/', default='profile/avator.png', null=True)
-
 
     def __str__(self):
         return self.fname
