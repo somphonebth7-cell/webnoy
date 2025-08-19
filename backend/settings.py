@@ -1,11 +1,11 @@
 """
 Django 4.0.
-
 """
 
 from pathlib import Path
 import os
-
+from decouple import config
+import dj_database_url
 #  Project BASE_DIR
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -13,14 +13,19 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_DIR=os.path.join(BASE_DIR,'static')
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!=is9&v7h@gsp0kgcs3r7ga3t8(8hc3aexgc#h+!g&cbt0yad5'
+# # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = 'django-insecure-!=is9&v7h@gsp0kgcs3r7ga3t8(8hc3aexgc#h+!g&cbt0yad5'
+
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = 
+
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =config("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS =config("ALLOWED_HOSTS").split(",")
 
 # Application definition
 
@@ -66,16 +71,29 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 # Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
+DATABASES= {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'cv_database',
+        'USER':'postgres',
+        'PASSWORD':'adminsomphone',
+        'HOST':'localhost',
+        'PORT':'5432'
+     }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
+
+DATABASES['default'] = dj_database_url.parse(config("DATABASE_URL"))
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
